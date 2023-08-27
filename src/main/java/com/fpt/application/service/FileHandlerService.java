@@ -24,16 +24,14 @@ public class FileHandlerService {
       Files.createDirectories(uploadPath);
     }
 
-    String fileCode = RandomStringUtils.randomAlphanumeric(8);
-
     try (InputStream inputStream = file.getInputStream()) {
-      Path filePath = uploadPath.resolve(fileCode + "-" + fileName);
+      Path filePath = uploadPath.resolve(fileName);
       Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
     } catch (IOException ioe) {
       throw new IOException("Could not save file: " + fileName, ioe);
     }
 
-    return fileCode;
+    return fileName;
   }
 
   public Resource getFileAsResource(String fileName) throws IOException {
