@@ -23,12 +23,12 @@ public class MainController {
   @Autowired
   private FileHandlerService service;
 
-  @GetMapping(value = "/download-file/{file_name}")
-  public ResponseEntity<?> download(@PathVariable(value = "file_name") String fileName) {
+  @GetMapping(value = "/download-file/key/{key}/name/{file_name}")
+  public ResponseEntity<?> download(@PathVariable(value = "key") String key, @PathVariable(value = "file_name") String fileName) {
 
     Resource resource = null;
     try {
-      resource = service.getFileAsResource(fileName);
+      resource = service.getFileAsResource(key + "/" + fileName);
     } catch (IOException e) {
       return ResponseEntity.internalServerError().build();
     }
@@ -51,12 +51,12 @@ public class MainController {
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
     long size = file.getSize();
 
-    String filecode = service.saveFile(fileName, file);
+    String fileCode = service.saveFile(fileName, file);
 
     FileUploadResponse response = new FileUploadResponse();
     response.setFileName(fileName);
     response.setSize(size);
-    response.setDownloadUri("/downloadFile/" + filecode);
+    response.setKey(fileCode.split("/")[0]);
 
     return new ResponseEntity<>(response, HttpStatus.OK);
   }

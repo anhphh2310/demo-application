@@ -3,7 +3,7 @@ package com.fpt.application.dto;
 public class FileUploadResponse {
   private String fileName;
   private long size;
-  private String downloadUri;
+  private String key;
 
   public String getFileName() {
     return fileName;
@@ -21,11 +21,11 @@ public class FileUploadResponse {
     this.size = size;
   }
 
-  public String getDownloadUri() {
-    return downloadUri;
+  public String getKey() {
+    return key;
   }
 
-  public void setDownloadUri(String downloadUri) {
-    this.downloadUri = downloadUri;
+  public void setKey(String key) {
+    this.key = key;
   }
 }
