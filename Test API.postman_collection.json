@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "cb1717b7-cfcb-4865-b68c-416364877b4b",
+		"name": "Test API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23306133"
+	},
+	"item": [
+		{
+			"name": "API Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{HOST_NAME}}/upload-file",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"upload-file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API Download",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_NAME}}/download-file/key/{key}/name/{file_name}",
+					"host": [
+						"{{HOST_NAME}}"
+					],
+					"path": [
+						"download-file",
+						"key",
+						"{key}",
+						"name",
+						"{file_name}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST_NAME",
+			"value": "test",
+			"type": "string"
+		}
+	]
+}
