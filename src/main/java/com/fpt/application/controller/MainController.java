@@ -23,6 +23,11 @@ public class MainController {
   @Autowired
   private FileHandlerService service;
 
+  @GetMapping(value = "/version")
+  public String getVersion() {
+    return "0.0.2";
+  }
+
   @GetMapping(value = "/download-file/key/{key}/name/{file_name}")
   public ResponseEntity<?> download(@PathVariable(value = "key") String key, @PathVariable(value = "file_name") String fileName) {
 
