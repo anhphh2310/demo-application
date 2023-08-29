@@ -40,10 +40,7 @@ public class DataBucketUtil {
 
   public String uploadFile(MultipartFile file, String name, String contentType) {
 
-    File tmp = null;
     try {
-      tmp = convertFile(file);
-      byte[] data = FileUtils.readFileToByteArray(convertFile(file));
 
       InputStream credentialStream = new ClassPathResource(configFile).getInputStream();
       GoogleCredentials credentials = ServiceAccountCredentials.fromStream(credentialStream);
@@ -56,7 +53,7 @@ public class DataBucketUtil {
       Bucket bucket = storage.get(bucketId, Storage.BucketGetOption.fields());
       String random = RandomUtils.nextInt(0,10000) + "";
 
-      Blob blob = bucket.create(random + "/" + name, data, contentType);
+      Blob blob = bucket.create(random + "/" + name, file.getBytes(), contentType);
       if (blob == null) {
         throw new RuntimeException("Error while upload gcp");
       }
@@ -64,10 +61,7 @@ public class DataBucketUtil {
     } catch (Exception e) {
       log.error(e.getMessage());
       throw new RuntimeException("Error while upload gcp");
-    } finally {
-      tmp.delete();
     }
-
   }
 
   public Resource downloadFile(String key) throws IOException {
@@ -83,19 +77,5 @@ public class DataBucketUtil {
     ByteArrayResource resource = new ByteArrayResource(
         blob.getContent());
     return resource;
-  }
-
-
-  private File convertFile(MultipartFile file) {
-    try {
-      File convertFile = new File(file.getOriginalFilename());
-      FileOutputStream outputStream = new FileOutputStream(convertFile);
-      outputStream.write(file.getBytes());
-      outputStream.close();
-      return convertFile;
-    } catch (IOException e) {
-      log.error("Error while write file, " + e.getMessage());
-      throw new RuntimeException("Error while read file");
-    }
   }
 }
